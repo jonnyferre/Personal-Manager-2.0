@@ -2,51 +2,48 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Personal Manager 2.0</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#153293" />
+  <title>Personal Manager</title>
+
+  <!-- PWA (opcional): si no subes estos iconos, no pasa nada -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+  <link rel="stylesheet" href="styles.css?v=3" />
 </head>
 <body>
-  <div class="wrap">
-    <header class="top">
-      <div class="brand">
-        <div class="title">Personal Manager 2.0</div>
-        <div class="sub">Test de GitHub Pages (sin historias raras)</div>
+  <div id="app" class="app">
+    <header class="topbar">
+      <button id="btnBack" class="iconbtn" aria-label="Volver" title="Volver">‹</button>
+
+      <div class="topbar_titles">
+        <div id="topTitle" class="topbar_title">Personal Manager</div>
+        <div id="topSubtitle" class="topbar_subtitle"></div>
       </div>
-      <div class="actions">
-        <button id="btnPing" class="btn">PING</button>
-        <button id="btnReset" class="btn ghost">RESET</button>
+
+      <div class="topbar_actions">
+        <button id="btnAdd" class="iconbtn" aria-label="Añadir" title="Añadir">＋</button>
+        <button id="btnSettings" class="iconbtn" aria-label="Ajustes" title="Ajustes">⚙</button>
       </div>
     </header>
 
-    <main class="card">
-      <h1>✅ Si ves esto, el HTML y el CSS están bien</h1>
-      <p>Ahora probamos JavaScript abajo. Si JS carga, saldrá el estado.</p>
+    <main id="main" class="main"></main>
 
-      <div class="kpis">
-        <div class="kpi">
-          <div class="kpiLabel">Estado</div>
-          <div id="status" class="kpiValue">Cargando JS…</div>
+    <div id="toast" class="toast hidden"></div>
+
+    <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true">
+      <div class="modal">
+        <div class="modal_head">
+          <div id="modalTitle" class="modal_title">Modal</div>
+          <button id="modalClose" class="iconbtn" aria-label="Cerrar" title="Cerrar">×</button>
         </div>
-        <div class="kpi">
-          <div class="kpiLabel">Clicks</div>
-          <div id="clicks" class="kpiValue">0</div>
-        </div>
+        <div id="modalBody" class="modal_body"></div>
+        <div id="modalFoot" class="modal_foot"></div>
       </div>
-
-      <div class="logWrap">
-        <div class="logTitle">Log</div>
-        <pre id="log" class="log"></pre>
-      </div>
-    </main>
-
-    <footer class="foot">
-      <span>Ruta:</span> <code id="path"></code>
-      <span>—</span>
-      <span>Versión:</span> <code>v1</code>
-    </footer>
+    </div>
   </div>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=3"></script>
 </body>
 </html>
