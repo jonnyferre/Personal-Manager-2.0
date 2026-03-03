@@ -345,7 +345,7 @@ function autoShiftForDate(iso){
   const start=parseISO(rot.startDate);
   if(!start) return null;
   const d=parseISO(iso);
-  const diffDays = Math.floor((d - start) / (24*3600*1000));
+  const diffDays = dayNumberUTC(d) - dayNumberUTC(start);
   if(diffDays<0) return null;
   const idx = diffDays % rot.pattern.length;
   return rot.pattern[idx] || null;
