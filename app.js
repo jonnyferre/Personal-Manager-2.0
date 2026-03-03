@@ -247,7 +247,10 @@ function monthMatrix(year, monthIndex){ // monthIndex:0..11
 function calendarView({year, monthIndex, onDayClick, dayBadge}){
   const wrap=el('div',{class:'calWrap'});
   const head=el('div',{class:'calHead'},[
-    el('div',{class:'month', text:`${monthNames[monthIndex]} ${year}`}),
+    el('div',{class:'calTitle'},[
+      el('select',{class:'select calSelect', onchange:(e)=>onDayClick({set:{year, monthIndex:parseInt(e.target.value,10)}})}, monthNames.map((m,i)=>el('option',{value:i, text:m, selected:i===monthIndex}))),
+      el('select',{class:'select calSelect', onchange:(e)=>onDayClick({set:{year:parseInt(e.target.value,10), monthIndex}})}, Array.from({length:11},(_,k)=>year-5+k).map(y=>el('option',{value:y, text:String(y), selected:y===year})))
+    ]),
     el('div',{class:'calNav'},[
       el('button',{class:'btn ghost', text:'‹', onclick:()=>onDayClick({nav:-1})}),
       el('button',{class:'btn ghost', text:'›', onclick:()=>onDayClick({nav:+1})}),
@@ -255,6 +258,7 @@ function calendarView({year, monthIndex, onDayClick, dayBadge}){
     ])
   ]);
   wrap.appendChild(head);
+
 
   const grid=el('div',{class:'calGrid'});
   for(const d of dowNames) grid.appendChild(el('div',{class:'dow', text:d}));
@@ -866,7 +870,12 @@ function viewAgenda(){
 
   const cal = calendarView({
     year, monthIndex,
-    onDayClick: ({iso, nav, today:goToday})=>{
+    onDayClick: ({iso, nav, today:goToday, set})=>{
+      if(set){
+        state.meta.monthFocus=`${set.year}-${pad2(set.monthIndex+1)}`;
+        saveState();
+        return render();
+      }
       if(nav===-1) return goMonth(-1);
       if(nav===+1) return goMonth(+1);
       if(goToday){
@@ -1010,7 +1019,12 @@ function viewWork(){
 
   const cal = calendarView({
     year, monthIndex,
-    onDayClick: ({iso, nav, today:goToday})=>{
+    onDayClick: ({iso, nav, today:goToday, set})=>{
+      if(set){
+        state.meta.monthFocus=`${set.year}-${pad2(set.monthIndex+1)}`;
+        saveState();
+        return render();
+      }
       if(nav===-1) return goMonth(-1);
       if(nav===+1) return goMonth(+1);
       if(goToday){

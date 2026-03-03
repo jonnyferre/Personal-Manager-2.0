@@ -239,6 +239,14 @@ textarea{min-height:90px; resize:vertical}
   display:flex; align-items:center; justify-content:space-between; gap:10px;
   margin-bottom:10px;
 }
+.calTitle{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.calSelect{min-width:120px}
+@media(max-width:560px){
+  .calHead{flex-direction:column;align-items:stretch}
+  .calNav{justify-content:space-between}
+  .calSelect{min-width:0;width:100%}
+  .calTitle{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+}
 .calHead .month{font-weight:900}
 .calNav{display:flex; gap:8px}
 .calGrid{
@@ -274,7 +282,12 @@ textarea{min-height:90px; resize:vertical}
 .dot{width:10px; height:10px; border-radius:999px; background:#bbb}
 .daySub{font-size:12px; color:var(--muted); margin-top:auto}
 @media(max-width:560px){
-  .calGrid{gap:8px}
+  .calGrid{gap:8px
+  .day{min-height:76px;padding:8px;border-radius:14px;}
+  .dayTag{padding:4px 6px;gap:6px;}
+  .dayTag span:last-child{font-size:11px;}
+  .dot{width:8px;height:8px;}
+}
   .day{min-height:74px; padding:9px}
 }
 
