@@ -23,6 +23,18 @@ const parseISO = (s)=>{
   return new Date(y,m-1,d);
 };
 
+function parseMonthFocus(str){
+  const today=new Date();
+  const fallback={year: today.getFullYear(), monthIndex: today.getMonth()};
+  if(!str) return fallback;
+  const parts=String(str).split("-");
+  if(parts.length!==2) return fallback;
+  const y=parseInt(parts[0],10);
+  const m=parseInt(parts[1],10);
+  if(!Number.isFinite(y) || !Number.isFinite(m) || y<2000 || y>2100 || m<1 || m>12) return fallback;
+  return {year:y, monthIndex:m-1};
+}
+
 const monthNames = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const dowNames = ['L','M','X','J','V','S','D']; // monday-first
 
