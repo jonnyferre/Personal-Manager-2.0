@@ -2,48 +2,48 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#153293" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Personal Manager</title>
-
-  <!-- PWA (opcional): si no subes estos iconos, no pasa nada -->
+  <meta name="theme-color" content="#f6f7fb" />
   <link rel="manifest" href="manifest.json" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-
-  <link rel="stylesheet" href="styles.css?v=1772722225" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div id="app" class="app">
     <header class="topbar">
-      <button id="btnBack" class="iconbtn" aria-label="Volver" title="Volver">‹</button>
+      <button class="iconbtn" id="btnBack" aria-label="Volver" title="Volver">
+        <span class="icon">‹</span>
+      </button>
 
-      <div class="topbar_titles">
-        <div id="topTitle" class="topbar_title">Personal Manager</div>
-        <div id="topSubtitle" class="topbar_subtitle"></div>
-      </div>
+      <div class="topbar__title" id="topTitle">Personal Manager</div>
 
-      <div class="topbar_actions">
-        <button id="btnAdd" class="iconbtn" aria-label="Añadir" title="Añadir">＋</button>
-        <button id="btnSettings" class="iconbtn" aria-label="Ajustes" title="Ajustes">⚙</button>
+      <div class="topbar__actions">
+        <button class="iconbtn" id="btnAdd" aria-label="Añadir" title="Añadir">
+          <span class="icon">＋</span>
+        </button>
+        <button class="iconbtn" id="btnSettings" aria-label="Ajustes" title="Ajustes">
+          <span class="icon">⚙</span>
+        </button>
       </div>
     </header>
 
     <main id="main" class="main"></main>
 
-    <div id="toast" class="toast hidden"></div>
-
-    <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true">
-      <div class="modal">
-        <div class="modal_head">
-          <div id="modalTitle" class="modal_title">Modal</div>
-          <button id="modalClose" class="iconbtn" aria-label="Cerrar" title="Cerrar">×</button>
+    <div id="overlay" class="overlay hidden">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal__head">
+          <div class="modal__title" id="modalTitle"></div>
+          <button class="iconbtn" id="modalClose" aria-label="Cerrar" title="Cerrar"><span class="icon">×</span></button>
         </div>
-        <div id="modalBody" class="modal_body"></div>
-        <div id="modalFoot" class="modal_foot"></div>
+        <div class="modal__body" id="modalBody"></div>
+        <div class="modal__foot" id="modalFoot"></div>
       </div>
     </div>
+
+    <div id="toast" class="toast hidden"></div>
   </div>
 
-  <script src="app.js?v=1772722225"></script>
+  <script src="app.js"></script>
 </body>
 </html>
