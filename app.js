@@ -89,6 +89,7 @@ function btn(text, kind='', onClick=null){
 
 /* Storage */
 const KEY = 'pm_v4_state';
+const WELCOME_KEY = 'pm_v4_seen_welcome';
 const DEFAULT = {
   ui: {
     workFocus: {year: (new Date()).getFullYear(), month:(new Date()).getMonth()},
@@ -478,6 +479,42 @@ function openWorkDayModal(iso){
 /* Views */
 function setTop(title){ $('#topTitle').textContent = title; }
 
+
+function viewWelcome(){
+  setTop('Bienvenido');
+  const main = $('#main'); main.innerHTML='';
+  const logo = el('div',{class:'welcomeLogo'},[
+    el('span',{text:'▦', style:'font-size:34px; font-weight:950; color:var(--accent);'})
+  ]);
+
+  const card = el('div',{class:'welcomeCard'},[
+    logo,
+    el('div',{class:'welcomeTitle', text:'Tu gestor personal'}),
+    el('div',{class:'welcomeSub', text:'Trabajo, economía y agenda en un solo sitio. Simple, limpio y rápido.'}),
+    el('div',{class:'welcomeActions'},[
+      btn('Empezar','primary', ()=>{
+        localStorage.setItem(WELCOME_KEY, '1');
+        go('home');
+      }),
+      btn('Resetear datos','bad', ()=>{
+        if(confirm('¿Borrar TODOS los datos de la app?')){
+          localStorage.removeItem(KEY);
+          localStorage.removeItem(WELCOME_KEY);
+          state = loadState();
+          state.ui.workFocus = normalizeFocus(state.ui.workFocus);
+          state.ui.agendaFocus = normalizeFocus(state.ui.agendaFocus);
+          state.ui.economyFocus = normalizeFocus(state.ui.economyFocus);
+          saveState();
+          toast('Datos borrados');
+        }
+      })
+    ])
+  ]);
+
+  main.appendChild(el('div',{class:'welcome'},[card]));
+}
+
+
 function viewHome(){
   setTop('Personal Manager');
   const main = $('#main'); main.innerHTML='';
@@ -610,9 +647,10 @@ function viewAgenda(){
 function render(){
   const r = getRoute();
 
-  $('#btnBack').style.visibility = (r==='home') ? 'hidden' : 'visible';
+  $('#btnBack').style.visibility = (r==='home' || r==='welcome') ? 'hidden' : 'visible';
   $('#btnAdd').style.visibility = (r==='work_contracts') ? 'visible' : 'hidden';
 
+  if(r==='welcome') return viewWelcome();
   if(r==='home') return viewHome();
   if(r==='work') return viewWork();
   if(r==='work_contracts') return viewWorkContracts();
@@ -654,6 +692,13 @@ function bind(){
 
 document.addEventListener('DOMContentLoaded', ()=>{
   bind();
-  if(!location.hash) go('home');
-  else render();
+  const seen = localStorage.getItem(WELCOME_KEY)==='1';
+  if(!location.hash){
+    go(seen ? 'home' : 'welcome');
+  } else {
+    // si aún no vio la bienvenida, forzamos welcome salvo que esté en welcome ya
+    const r = getRoute();
+    if(!seen && r!=='welcome') go('welcome');
+    else render();
+  }
 });
